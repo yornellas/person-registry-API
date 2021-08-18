@@ -16,7 +16,7 @@ public class Person {
     private String firstName;
 
     @Column(nullable = false)
-    private String lastname;
+    private String lastName;
 
     @Column(nullable = false, unique = true)
     private String cpf;
@@ -29,10 +29,10 @@ public class Person {
     public Person() {
     }
 
-    public Person(Long id, String firstName, String lastname, String cpf, LocalDate birthDate, List<Phone> phones) {
+    public Person(Long id, String firstName, String lastName, String cpf, LocalDate birthDate, List<Phone> phones) {
         this.id = id;
         this.firstName = firstName;
-        this.lastname = lastname;
+        this.lastName = lastName;
         this.cpf = cpf;
         this.birthDate = birthDate;
         this.phones = phones;
@@ -54,12 +54,12 @@ public class Person {
         this.firstName = firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getCpf() {
@@ -104,7 +104,7 @@ public class Person {
         return "Person{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
-                ", lastname='" + lastname + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", cpf='" + cpf + '\'' +
                 ", birthDate=" + birthDate +
                 ", phones=" + phones +
