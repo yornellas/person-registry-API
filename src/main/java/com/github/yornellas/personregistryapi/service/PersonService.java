@@ -1,5 +1,6 @@
 package com.github.yornellas.personregistryapi.service;
 
+import com.github.yornellas.personregistryapi.dto.request.PersonDTO;
 import com.github.yornellas.personregistryapi.entity.Person;
 import com.github.yornellas.personregistryapi.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +34,9 @@ public class PersonService {
 
     public void deleteById(Long id) {
         personRepository.deleteById(id);
+    }
+
+    public Person fromDTO(PersonDTO personDTO) {
+        return new Person(personDTO.getId(), personDTO.getFirstName(), personDTO.getLastName(), personDTO.getCpf(), personDTO.getBirthDate(), personDTO.getPhones());
     }
 }

@@ -1,5 +1,6 @@
 package com.github.yornellas.personregistryapi.dto.request;
 
+import com.github.yornellas.personregistryapi.entity.Person;
 import com.github.yornellas.personregistryapi.entity.Phone;
 
 import javax.validation.Valid;
