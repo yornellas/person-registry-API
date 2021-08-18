@@ -2,6 +2,8 @@ package com.github.yornellas.personregistryapi.controller;
 
 import com.github.yornellas.personregistryapi.dto.request.PersonDTO;
 import com.github.yornellas.personregistryapi.entity.Person;
+
+import com.github.yornellas.personregistryapi.exception.PersonNotFoundException;
 import com.github.yornellas.personregistryapi.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,13 +25,15 @@ public class PersonController {
     @GetMapping
     public ResponseEntity<List<PersonDTO>> findAll() {
         List<Person> list = personService.findAll();
-        List<PersonDTO> listDTO = list.stream().map(e -> new PersonDTO(e.getId(), e.getFirstName(), e.getLastName(), e.getCpf(), e.getBirthDate(), e.getPhones())).collect(Collectors.toList());
+        List<PersonDTO> listDTO = list.stream()
+                .map(e -> new PersonDTO(e.getId(), e.getFirstName(), e.getLastName(), e.getCpf(), e.getBirthDate(), e.getPhones()))
+                .collect(Collectors.toList());
         return ResponseEntity.ok().body(listDTO);
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<PersonDTO> findById(@PathVariable Long id) {
-        Person obj = personService.findById(id).orElseThrow(NoSuchElementException::new);
+    public ResponseEntity<PersonDTO> findById(@PathVariable Long id) throws PersonNotFoundException {
+        Person obj = personService.findById(id).orElseThrow(() -> new PersonNotFoundException(id));
         PersonDTO objDTO = new PersonDTO(obj.getId(), obj.getFirstName(), obj.getLastName(), obj.getCpf(), obj.getBirthDate(), obj.getPhones());
         return ResponseEntity.ok().body(objDTO);
     }
@@ -43,8 +47,8 @@ public class PersonController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<PersonDTO> update(@PathVariable Long id, @RequestBody Person person) {
-        Person obj = personService.findById(id).orElseThrow(NoSuchElementException::new);
+    public ResponseEntity<PersonDTO> update(@PathVariable Long id, @RequestBody Person person) throws PersonNotFoundException {
+        Person obj = personService.findById(id).orElseThrow(() -> new PersonNotFoundException(id));
         obj = personService.create(obj);
         PersonDTO objDTO = new PersonDTO(obj.getId(), obj.getFirstName(), obj.getLastName(), obj.getCpf(), obj.getBirthDate(), obj.getPhones());
         return ResponseEntity.ok().body(objDTO);

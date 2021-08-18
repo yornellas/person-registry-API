@@ -23,7 +23,9 @@ public class PhoneController {
     @GetMapping
     public ResponseEntity<List<PhoneDTO>> findAll() {
         List<Phone> list = phoneService.findAll();
-        List<PhoneDTO> listDTO = list.stream().map(e -> new PhoneDTO(e.getId(), e.getType(), e.getNumber())).collect(Collectors.toList());
+        List<PhoneDTO> listDTO = list.stream()
+                .map(e -> new PhoneDTO(e.getId(), e.getType(), e.getNumber()))
+                .collect(Collectors.toList());
         return ResponseEntity.ok().body(listDTO);
     }
 

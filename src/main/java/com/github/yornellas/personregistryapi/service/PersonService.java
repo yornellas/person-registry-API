@@ -2,14 +2,16 @@ package com.github.yornellas.personregistryapi.service;
 
 import com.github.yornellas.personregistryapi.dto.request.PersonDTO;
 import com.github.yornellas.personregistryapi.entity.Person;
+import com.github.yornellas.personregistryapi.exception.PersonNotFoundException;
 import com.github.yornellas.personregistryapi.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+@Service
 public class PersonService {
 
     @Autowired
@@ -27,8 +29,11 @@ public class PersonService {
         return personRepository.save(person);
     }
 
-    public Person update(Long id, Person person) {
+    public Person update(Long id, Person person) throws PersonNotFoundException {
         Optional<Person> obj = personRepository.findById(id);
+        if(obj.isEmpty()) {
+            throw new PersonNotFoundException(id);
+        }
         return personRepository.save(obj.orElseThrow(NoSuchElementException::new));
     }
 
