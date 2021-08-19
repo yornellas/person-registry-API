@@ -21,7 +21,11 @@ public class PersonService {
         return personRepository.findAll();
     }
 
-    public Optional<Person> findById(Long id) {
+    public Optional<Person> findById(Long id) throws PersonNotFoundException {
+        Optional<Person> obj = personRepository.findById(id);
+        if(obj.isEmpty()) {
+            throw new PersonNotFoundException(id);
+        }
         return personRepository.findById(id);
     }
 
@@ -34,10 +38,11 @@ public class PersonService {
         if(obj.isEmpty()) {
             throw new PersonNotFoundException(id);
         }
-        return personRepository.save(obj.orElseThrow(NoSuchElementException::new));
+        return personRepository.save(obj.orElseThrow(() -> new PersonNotFoundException(id)));
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws PersonNotFoundException {
+        personRepository.findById(id).orElseThrow(() -> new PersonNotFoundException(id));
         personRepository.deleteById(id);
     }
 
