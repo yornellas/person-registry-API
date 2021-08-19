@@ -12,7 +12,7 @@ Nesse projeto foi desenvolvido um pequeno sistema de gerenciamento e cadastro de
 <h3>Tecnologias utilizadas</h3>
 
 * Java 11
-* Maven
+* Maven 3.8.1
 * Spring Boot (dependências: Spring Boot Dev Tools, Spring Web, Spring Data JPA, Spring Boot Actuator, H2 Database)
 * Heroku
 
